@@ -43,5 +43,7 @@ group :development, :test do
   gem 'spring'
   gem 'execjs'
   gem 'therubyracer'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
