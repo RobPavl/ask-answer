@@ -6,5 +6,10 @@ RSpec.describe Question, type: :model do
   	question.valid?
   	expect(question.errors[:title]).to include("can't be blank")
   end
-
+  
+  it 'invalid without a body' do
+  	question = Question.new(body: "asking")
+  	question.valid?
+  	expect(question.errors[:body]).not_to include("can't be blank")
+  end
 end
