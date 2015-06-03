@@ -10,4 +10,9 @@ RSpec.describe Question, type: :model do
       .is_at_least(5)
       .is_at_most(140)
   end
+  it do
+    should validate_length_of(:body)
+      .is_at_least(15)
+      .is_at_most(1050)
+  end
 end
