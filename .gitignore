@@ -4,4 +4,4 @@
  # Ignore all logfiles and tempfiles.
  /log
  /tmp
- /config/database.yml
+ /config/database.ymltmp
