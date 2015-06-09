@@ -43,6 +43,7 @@ group :development, :test do
   gem 'spring'
   gem 'execjs'
   gem 'therubyracer'
+  gem 'slim-rails'
 end
 
 group :test do
