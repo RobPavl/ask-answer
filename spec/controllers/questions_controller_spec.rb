@@ -2,18 +2,15 @@ require 'rails_helper'
 
 	describe QuestionsController do
 	  describe "GET #index" do
-	    
-	    it "populates an array of all questions" do
-          question1 = FactoryGirl.create(:question)
-          question2 = FactoryGirl.create(:question)
-	    	
+	    let(:questions) { create_list(:question, 2) }
+	    before do	
 	      get :index
-
-	      expect(assigns(:questions)).to match_array([question1, question2])
+	    end
+	    it "populates an array of all questions" do       
+	      expect(assigns(:questions)).to match_array(questions)
 	    end
 	
 	    it "render index view" do
-	      get :index
 	      expect(response).to render_template :index
 	    end
 	  end
