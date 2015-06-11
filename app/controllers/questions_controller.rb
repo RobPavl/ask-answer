@@ -11,4 +11,8 @@ class QuestionsController < ApplicationController
 	def new
 		@question = Question.new
 	end
+
+	def edit
+	 	@question = Question.find(params[:id])
+	end
 end
