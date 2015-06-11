@@ -44,6 +44,7 @@ group :development, :test do
   gem 'execjs'
   gem 'therubyracer'
   gem 'slim-rails'
+  gem 'database_cleaner'
 end
 
 group :test do
