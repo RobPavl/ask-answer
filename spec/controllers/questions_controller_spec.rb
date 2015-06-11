@@ -16,9 +16,7 @@ require 'rails_helper'
 	    end
 	  end
 
-	  describe 'GET #show' do
-	    let(:question) { create(:question) }
-	    
+	  describe 'GET #show' do    
 	    before { get :show, id: question }
 
 	    it 'assigns the requested question to question' do
@@ -39,9 +37,7 @@ require 'rails_helper'
 		it { should render_template :new }
 	  end
 
-	  describe 'GET #edit' do
-	  	let(:question) { create(:question) }
-	  	
+	  describe 'GET #edit' do 	
 	  	before { get :edit, id: question }
 
 	  	it 'assings the requested question to @question'do
