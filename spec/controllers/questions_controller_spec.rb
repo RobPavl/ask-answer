@@ -48,5 +48,17 @@ require 'rails_helper'
 	    end
 	  end
 
+	  describe 'POST #create' do
+	  	context 'with valid attributes' do
+	  		it 'saves new question to database'do
+	  			expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+	  		end
+	  		it 'redirects to show view'do
+	  			post :create, question: attributes_for(:question)
+	  			expect(response).to redirect_to question_path(assigns(:question))
+	  	    end
+	  	end
+	  end
+
 	end
   
