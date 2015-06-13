@@ -3,5 +3,11 @@ FactoryGirl.define do
     title "Test string 15 length"
     body "Test body Test body Test body "
   end
+
+  factory :invalid_question, class: 'Question' do
+    title nil
+    body nil
+  end
+
 end
  

@@ -17,7 +17,11 @@ class QuestionsController < ApplicationController
 
 def create
 	@question = Question.create(question_params)
-	redirect_to @question
+	  if @question.save
+        redirect_to question_path(@question)
+      else
+	    render :new
+      end
 end
 
 	private
