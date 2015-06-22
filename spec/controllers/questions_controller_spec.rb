@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 	describe QuestionsController do
-	  let(:question) { create(:question) }
+	  let(:user) { create(:user) }
+      let(:questions) { create_list(:question, 2, user: user) }
+      let(:question) { create(:question, user: user) }
 
 	  describe "GET #index" do
-	    let(:questions) { create_list(:question, 2) }
-	    
+	   	    
 	    before { get :index } 
 	
 	    it "populates an array of all questions" do       
@@ -28,6 +29,8 @@ require 'rails_helper'
 	  end
   
 	  describe 'GET #new' do
+        sign_in_user
+
 		before { get :new }
 
 		it 'get a new question object' do
@@ -38,6 +41,8 @@ require 'rails_helper'
 	  end
 
 	  describe 'GET #edit' do 	
+        sign_in_user
+
 	  	before { get :edit, id: question }
 
 	  	it 'assings the requested question to @question'do
@@ -49,6 +54,8 @@ require 'rails_helper'
 	  end
 
 	  describe 'POST #create' do
+        sign_in_user
+
 	  	context 'with valid attributes' do
 	  		it 'saves new question to database'do
 	  			expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
