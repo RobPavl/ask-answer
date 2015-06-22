@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 	describe QuestionsController do
-	  let(:user) { create(:user) }
-      let(:questions) { create_list(:question, 2, user: user) }
-      let(:question) { create(:question, user: user) }
+      let(:questions) { create_list(:question, 2, user: @user) }
+      let(:question) { create(:question, user: @user) }
 
 	  describe "GET #index" do
-	   	    
+	   	sign_in_user
+
 	    before { get :index } 
 	
 	    it "populates an array of all questions" do       
@@ -18,6 +18,8 @@ require 'rails_helper'
 	  end
 
 	  describe 'GET #show' do    
+	    sign_in_user
+
 	    before { get :show, id: question }
 
 	    it 'assigns the requested question to question' do

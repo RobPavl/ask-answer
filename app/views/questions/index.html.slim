@@ -1,1 +1,6 @@
 = link_to 'Ask a question', new_question_path
+
+table
+  -@questions.find_each do |q|
+    tr
+      td=link_to q.title, question_path(q)
