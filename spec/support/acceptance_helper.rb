@@ -9,4 +9,9 @@ module AcceptanceHelper
 
   end
 
+  def log_out
+	page.driver.submit :delete, destroy_user_session_path, {}
+  end
+	
+
 end
