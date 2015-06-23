@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
 	before_action :authenticate_user!, except: [:show, :index]
-	before_action :load_question, only: [:show, :edit] 
+	before_action :load_question, only: [:show, :edit, :update, :destroy]
 
 	def index
 		@questions = Question.all
@@ -17,15 +17,20 @@ class QuestionsController < ApplicationController
 	def edit
 	end
 
-def create
-	@question = Question.create(question_params)
-	@question.user_id = current_user.id
-	  if @question.save
-        redirect_to question_path(@question), flash: { notice: "Question successfully created!"}
-      else
-	    render :new
-      end
-end
+	def create
+		@question = Question.create(question_params)
+		@question.user_id = current_user.id
+		  if @question.save
+	        redirect_to question_path(@question), flash: { notice: "Question successfully created!"}
+	      else
+		    render :new
+	      end
+	end
+
+	def destroy
+		@question.destroy
+		redirect_to questions_path
+	end
 
 	private
 

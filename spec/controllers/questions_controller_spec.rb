@@ -91,5 +91,22 @@ require 'rails_helper'
 
 	  end
 
+	  describe 'DELETE #destroy' do
+	 	sign_in_user
+	 
+	    it 'deletes specified question' do
+	 	   question
+	       expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+	 	end
+	 
+	    it 'redirects to index page' do
+	 	   delete :destroy, id: question
+	       expect(response).to redirect_to questions_path
+	 	end
+	 	
+	  end
+
+
+
 	end
   
