@@ -25,6 +25,11 @@ require 'rails_helper'
 	    it 'assigns the requested question to question' do
 	      expect(assigns(:question)).to eq question
 	    end
+
+		it 'assigns all the answers for specified question to @answers variable' do
+		  expect(assigns(:answers)).to match_array(question.answers)
+		end
+
 	    it 'renders show view' do
 	      expect(response).to render_template :show
 	    end
@@ -62,6 +67,12 @@ require 'rails_helper'
 	  		it 'saves new question to database'do
 	  			expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
 	  		end
+
+			it 'assigns created question to its author' do
+			    post :create, question: attributes_for(:question)
+			    expect(assigns(:question).user).to eq @user
+			end
+
 	  		it 'redirects to show view'do
 	  			post :create, question: attributes_for(:question)
 	  			expect(response).to redirect_to question_path(assigns(:question))
