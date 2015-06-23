@@ -1,2 +1,13 @@
 h1= @question.title
 h2= @question.body
+h3= 'Answers:'
+table
+  -@answers.find_each do |a|
+    tr
+      td= a.body
+
+- if user_signed_in?
+    = form_for [@question, Answer.new] do |f|
+      = f.label :body, 'Text'
+      = f.text_area :body
+      = f.submit 'Give an answer'

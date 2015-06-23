@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
     if @answer.save
-      redirect_to @question
+      redirect_to @question, flash: { notice: "Answer successfully added!"}
     else
       render 'questions/show'
     end
