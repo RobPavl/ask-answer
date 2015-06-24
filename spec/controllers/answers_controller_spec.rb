@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+
+let(:user) { create(:user) }
+let(:question) { create(:question, user: user) }
+let(:answer) { create(:answer, question: question, user: user) }
+
 describe 'POST #create' do
 
-  let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
-  let(:answer) { create(:answer) }
+  sign_in_user
 
   context 'with valid attributes' do
     it 'saves the new answer in the database' do
@@ -33,4 +36,22 @@ describe 'POST #create' do
     end
   end
 end
+
+describe 'DELETE #destroy' do
+
+  sign_in_user
+
+  it 'deletes specified answer' do
+    answer
+    expect { delete :destroy, question_id: question, id: answer }.to change(Answer, :count).by(-1)
+  end
+ 
+  it 'redirects to question page' do
+    delete :destroy, question_id: question, id: answer
+    expect(response).to redirect_to question
+  end
+ 
+end
+
+
 end
