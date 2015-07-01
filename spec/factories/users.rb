@@ -4,10 +4,18 @@ FactoryGirl.define do
     "user#{n}@demo_stackoverflow.com"
   end
 
+  sequence :password do |n|
+    "user-pass#{n}"
+  end
+
+  sequence :password_confirmation  do |n|
+    "user-pass#{n}"
+  end
+
   factory :user do
     email
-    password '12345678'
-    password_confirmation '12345678'
+    password 
+    password_confirmation 
   end
 
 end

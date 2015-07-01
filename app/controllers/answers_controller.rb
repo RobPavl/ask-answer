@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
-    @answer.user_id = current_user.id
+    @answer.user = current_user
     if @answer.save
       redirect_to @question, flash: { notice: "Answer successfully added!"}
     else
@@ -15,7 +15,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy
+    @answer.destroy if @answer.user_id == current_user.id
     redirect_to @answer.question
   end
 

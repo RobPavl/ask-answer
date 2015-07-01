@@ -3,6 +3,8 @@ require 'rails_helper'
 	describe QuestionsController do
       let(:questions) { create_list(:question, 2, user: @user) }
       let(:question) { create(:question, user: @user) }
+      let(:other_user) { create(:user) }
+      let(:other_user_question) { create(:question, user: other_user) }
 
 	  describe "GET #index" do
 	   	sign_in_user
@@ -99,6 +101,11 @@ require 'rails_helper'
 	       expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
 	 	end
 	 
+	    it 'does not delete non-authors question' do
+	      other_user_question
+	      expect { delete :destroy, id: other_user_question }.to_not change(Question, :count)
+	    end
+
 	    it 'redirects to index page' do
 	 	   delete :destroy, id: question
 	       expect(response).to redirect_to questions_path

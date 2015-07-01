@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
 
 	def create
 		@question = Question.create(question_params)
-		@question.user_id = current_user.id
+		@question.user = current_user
 		  if @question.save
 	        redirect_to question_path(@question), flash: { notice: "Question successfully created!"}
 	      else
@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def destroy
-		@question.destroy
+		@question.destroy if @question.user_id == current_user.id
 		redirect_to questions_path
 	end
 

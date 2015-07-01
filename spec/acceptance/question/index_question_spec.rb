@@ -9,7 +9,7 @@ feature 'User see the list of questions' do
 
     sign_in user
 
-    questions.map { |q| expect(page).to have_content q.title }
+    questions.each { |q| expect(page).to have_content q.title }
 
   end
 
@@ -17,7 +17,7 @@ feature 'User see the list of questions' do
 
     visit root_path
 
-    questions.map { |q| expect(page).to have_content q.title }
+    questions.each { |q| expect(page).to have_content q.title }
 
   end
 

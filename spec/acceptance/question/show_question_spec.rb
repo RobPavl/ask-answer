@@ -15,7 +15,7 @@ feature 'User can look page with specified question and answers to it' do
     expect(page).to have_content question.title
     expect(page).to have_content question.body
 
-    answers.map do |a|
+    answers.each do |a|
       expect(page).to have_content a.body
     end
 

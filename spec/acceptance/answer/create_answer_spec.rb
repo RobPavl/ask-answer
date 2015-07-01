@@ -11,11 +11,10 @@ feature 'User creates an answer' do
     sign_in user
     visit question_path(question)
 
-    answers.map do |a|
+    answers.each do |a|
 
       fill_in 'Text', with: a
       click_on 'Give an answer'
-      sleep(1)
 
       expect(page).to have_content a
 

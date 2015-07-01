@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User creates a question' do
 
   given(:user) { create(:user) }
-  given(:question) { [attributes_for(:question)[:title], attributes_for(:question)[:body]] }
+  given(:question) { build(:question) }
 
   scenario 'Authenticated user creates a question' do
 
@@ -11,13 +11,13 @@ feature 'User creates a question' do
 
     click_on 'Ask a question'
 
-    fill_in 'Title', with: question[0]
-    fill_in 'Text', with: question[1]
+    fill_in 'Title', with: question.title
+    fill_in 'Text', with: question.body
     click_on 'Save a question'
 
     expect(page).to have_content 'Question successfully created'
-    expect(page).to have_content question[0]
-    expect(page).to have_content question[1]
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
 
   end
 
