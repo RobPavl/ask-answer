@@ -12,7 +12,9 @@ feature 'Register' do
     fill_in 'Password confirmation', with: user.password
     click_on 'Sign up'
     expect(current_path).to eq root_path
-
+    
+    visit new_user_session_path
+    expect(current_path).to eq root_path
   end
 
 end
