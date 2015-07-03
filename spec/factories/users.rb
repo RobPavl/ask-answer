@@ -1,7 +1,7 @@
 FactoryGirl.define do
   
   sequence :email do |n|
-    "user#{n}@demo_stackoverflow.com"
+    "user#{n}@demostackoverflow.com"
   end
 
   sequence :password do |n|

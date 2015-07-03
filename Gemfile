@@ -46,6 +46,8 @@ group :development, :test do
   gem 'slim-rails'
   gem 'database_cleaner'
   gem 'devise'
+  gem 'selenium-webdriver'
+  gem 'capybara-webkit'
 end
 
 group :test do
