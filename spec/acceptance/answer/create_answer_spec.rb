@@ -2,19 +2,17 @@ require 'rails_helper'
 
 feature 'User creates an answer' do
 
-  given!(:user) { create(:user) }
-  given(:question) { create(:question, user: user ) }
+  given(:user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
   given(:answers) { [attributes_for(:answer)[:body],attributes_for(:answer)[:body]] }
 
   scenario 'Authenticated user answers for the question', js: true do
 
     sign_in(user)
-    sleep(2)
     visit question_path(question)
 
     answers.each do |a|
 
-      save_page
       fill_in 'Text', with: a
       click_on 'Give an answer'
 

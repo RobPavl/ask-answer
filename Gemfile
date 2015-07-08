@@ -44,10 +44,10 @@ group :development, :test do
   gem 'execjs'
   gem 'therubyracer'
   gem 'slim-rails'
-  gem 'database_cleaner'
   gem 'devise'
-  gem 'selenium-webdriver'
   gem 'capybara-webkit'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :test do
