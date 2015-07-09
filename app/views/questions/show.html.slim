@@ -3,8 +3,7 @@ h2= @question.body
 h3= 'Answers:'
 
 .answers
-  table
-    = render @answers
+   = render @answers
       
 - if user_signed_in?
     = form_for [@question, Answer.new], remote: true do |f|
