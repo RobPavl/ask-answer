@@ -29,12 +29,12 @@ describe 'POST #create' do
 
   context 'with invalid attributes' do
     it 'does not saves the new answer in the database' do
-      expect { post :create, question_id: question, answer: attributes_for(:invalid_answer) }.to_not change(Answer, :count)
+      expect { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(Answer, :count)
     end
 
     it 'redirects to show view' do
-      post :create, question_id: question, answer: attributes_for(:invalid_answer)
-      expect(response).to render_template 'questions/show'
+      post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
+      expect(response).to render_template :create
     end
   end
 end

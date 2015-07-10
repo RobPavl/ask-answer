@@ -8,5 +8,6 @@ h3= 'Answers:'
 - if user_signed_in?
     = form_for [@question, Answer.new], remote: true do |f|
       = f.label :body, 'Text'
+      .errors
       = f.text_area :body
       = f.submit 'Give an answer'
