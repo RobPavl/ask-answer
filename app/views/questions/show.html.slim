@@ -1,5 +1,6 @@
-h1= @question.title
-h2= @question.body
+.question
+ = render @question
+
 h3= 'Answers:'
 
 .answers
@@ -8,6 +9,6 @@ h3= 'Answers:'
 - if user_signed_in?
     = form_for [@question, Answer.new], remote: true do |f|
       = f.label :body, 'Text'
-      .errors
+      .answer_errors
       = f.text_area :body
       = f.submit 'Give an answer'

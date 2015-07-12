@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
 	before_action :authenticate_user!, except: [:show, :index]
-	before_action :load_question, only: [:show, :edit, :update, :destroy]
+	before_action :load_question, only: [:show, :update, :destroy]
 
 	def index
 		@questions = Question.all
@@ -14,7 +14,9 @@ class QuestionsController < ApplicationController
 		@question = Question.new
 	end
 
-	def edit
+	def update
+		# @question.update(question_params)
+		flash[:notice] = "Question successfully updated!" if @question.update(question_params)
 	end
 
 	def create

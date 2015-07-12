@@ -35,7 +35,7 @@ feature 'User creates an answer' do
 
       click_on 'Give an answer'
 
-      within '.errors' do
+      within '.answer_errors' do
         expect(page).to have_content "Body can't be blank"
       end
 

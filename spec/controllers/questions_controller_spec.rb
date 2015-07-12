@@ -49,19 +49,7 @@ require 'rails_helper'
 		it { should render_template :new }
 	  end
 
-	  describe 'GET #edit' do 	
-        sign_in_user
-
-	  	before { get :edit, id: question }
-
-	  	it 'assings the requested question to @question'do
-	  	  expect(assigns(:question)).to eq question
-	    end
-	    it 'renders edit view' do
-	      expect(response).to render_template :edit
-	    end
-	  end
-
+	 
 	  describe 'POST #create' do
         sign_in_user
 
@@ -92,6 +80,56 @@ require 'rails_helper'
 	  	end
 
 	  end
+
+	describe 'PATCH #update' do
+ 
+    sign_in_user
+ 
+    context 'with valid attributes' do
+ 
+      before { patch :update, id: question, question: { title: 'Updated_title_question', body: 'Updated_body_question' }, format: :js }
+ 
+       it 'assigns specified question to @question' do
+         expect(assigns(:question)).to eq question
+       end
+ 
+       it 'saves specified question with received attributes' do
+ 
+         question.reload
+         expect(question.title).to eq 'Updated_title_question'
+         expect(question.body).to eq 'Updated_body_question'
+ 
+       end
+ 
+       it 'redirects to updated question' do
+         expect(response).to render_template :update
+       end
+ 
+     end
+ 
+     context 'with invalid attributes' do
+ 
+      before { patch :update, id: question, question: attributes_for(:invalid_question), format: :js }
+ 
+       it 'does not saves specified question with received attributes' do
+ 
+         question.reload
+         expect(question.title).to_not eq attributes_for(:invalid_question)[:title]
+         expect(question.body).to_not eq attributes_for(:invalid_question)[:body]
+ 
+         expect(question.title).to eq question.title
+         expect(question.body).to eq question.body
+ 
+       end
+ 
+       it 'rerenders edit page' do
+         expect(response).to render_template :update
+       end
+ 
+     end
+ 
+   end
+
 
 	  describe 'DELETE #destroy' do
 	 	sign_in_user
