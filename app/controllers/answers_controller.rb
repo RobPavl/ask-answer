@@ -10,13 +10,12 @@ class AnswersController < ApplicationController
     flash[:notice] = "Answer successfully added!"  if @answer.save
   end
 
-def update
-  flash[:notice] = "Answer successfully updated!" if @answer.user_id == current_user.id && @answer.update(answer_params)  
-end
+  def update
+    flash[:notice] = "Answer successfully updated!" if @answer.user_id == current_user.id && @answer.update(answer_params)  
+  end
 
   def destroy
-    @answer.destroy if @answer.user_id == current_user.id
-    redirect_to @answer.question
+    flash[:notice] = "Answer successfully destroyed!" if @answer.user_id == current_user.id && @answer.destroy
   end
 
   private

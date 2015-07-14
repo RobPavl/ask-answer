@@ -45,7 +45,7 @@ describe 'PATCH #update' do
  
      context 'with valid attributes' do
  
-      before { patch :update, question_id: question, id: answer, answer: { body: 'Updated_body_answer' }, format: :js }
+      before { patch :update, id: answer, answer: { body: 'Updated_body_answer' }, format: :js }
  
        it 'assigns specified answer to @answer' do
          expect(assigns(:answer)).to eq answer
@@ -66,7 +66,7 @@ describe 'PATCH #update' do
  
      context 'with invalid attributes' do
  
-      before { patch :update, question_id: question, id: answer, answer: attributes_for(:answer), format: :js }
+      before { patch :update, id: answer, answer: attributes_for(:answer), format: :js }
  
        it 'does not saves specified answer with received attributes' do
  
@@ -107,17 +107,17 @@ describe 'DELETE #destroy' do
 
   it 'deletes specified answer' do
     answer
-    expect { delete :destroy, question_id: question, id: answer }.to change(Answer, :count).by(-1)
+    expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
   end
  
     it 'does not delete other user answer' do
       other_user_answer
-      expect { delete :destroy, question_id: question, id: other_user_answer }.to_not change(Answer, :count)
+      expect { delete :destroy, id: other_user_answer, format: :js}.to_not change(Answer, :count)
     end
 
   it 'redirects to question page' do
-    delete :destroy, question_id: question, id: answer
-    expect(response).to redirect_to question
+    delete :destroy, id: answer, format: :js
+    expect(response).to render_template :destroy
   end
  
 end
