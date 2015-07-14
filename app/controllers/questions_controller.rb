@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
 
 	def update
 		# @question.update(question_params)
-		flash[:notice] = "Question successfully updated!" if @question.update(question_params)
+		flash[:notice] = "Question successfully updated!" if @question.user_id == current_user.id && @question.update(question_params)
 	end
 
 	def create

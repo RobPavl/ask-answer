@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
-  before_action :load_answer, only: [:edit, :update, :destroy]
+  before_action :load_answer, only: [:update, :destroy]
 
   def create
     @question = Question.find(params[:question_id])
@@ -9,6 +9,10 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     flash[:notice] = "Answer successfully added!"  if @answer.save
   end
+
+def update
+  flash[:notice] = "Answer successfully updated!" if @answer.user_id == current_user.id && @answer.update(answer_params)  
+end
 
   def destroy
     @answer.destroy if @answer.user_id == current_user.id

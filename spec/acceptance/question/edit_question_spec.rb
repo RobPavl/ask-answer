@@ -36,7 +36,7 @@ feature 'User edit a question' do
 
       end
 
-      scenario 'trying to edit his question with invalid params', js: true do
+      scenario 'trying to edit his own question with invalid params', js: true do
 
         within '.question' do
 
@@ -49,8 +49,7 @@ feature 'User edit a question' do
 
           within '.question_errors' do
             expect(page).to have_content "Body can't be blank" 
-            expect(page).to have_content 'Body is too short (minimum is 15 characters)'
-
+            expect(page).to have_content "Body is too short (minimum is 15 characters)"
           end
 
         end

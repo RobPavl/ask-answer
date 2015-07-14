@@ -3,4 +3,5 @@ class Answer < ActiveRecord::Base
   belongs_to :user
   
   validates :body, :question_id, :user_id, presence: true
+  validates :body, length: 5..1500
 end

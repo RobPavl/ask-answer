@@ -8,7 +8,7 @@ feature 'User creates a question' do
   scenario 'Authenticated user creates a question' do
 
     sign_in user
-
+    visit root_path
     click_on 'Ask a question'
 
     fill_in 'Title', with: question.title

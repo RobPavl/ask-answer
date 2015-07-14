@@ -128,6 +128,23 @@ require 'rails_helper'
  
      end
  
+    context do
+
+      it 'does not update question where author is not current user', js: true do
+
+        old_body = other_user_question.body
+
+        patch :update, id: other_user_question, question: { body: 'Edited answer' }, format: :js
+
+        other_user_question.reload
+
+        expect(other_user_question.body).to_not eq 'Edited answer'
+        expect(other_user_question.body).to eq old_body
+
+      end
+
+    end
+ 
    end
 
 

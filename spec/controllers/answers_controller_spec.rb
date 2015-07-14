@@ -39,6 +39,68 @@ describe 'POST #create' do
   end
 end
 
+describe 'PATCH #update' do
+ 
+     sign_in_user
+ 
+     context 'with valid attributes' do
+ 
+      before { patch :update, question_id: question, id: answer, answer: { body: 'Updated_body_answer' }, format: :js }
+ 
+       it 'assigns specified answer to @answer' do
+         expect(assigns(:answer)).to eq answer
+       end
+ 
+       it 'saves specified answer with received attributes' do
+ 
+         answer.reload
+         expect(answer.body).to eq 'Updated_body_answer'
+ 
+       end
+ 
+       it 'redirects to question' do
+        expect(response).to render_template :update
+       end
+ 
+     end
+ 
+     context 'with invalid attributes' do
+ 
+      before { patch :update, question_id: question, id: answer, answer: attributes_for(:answer), format: :js }
+ 
+       it 'does not saves specified answer with received attributes' do
+ 
+         answer.reload
+         expect(answer.body).to_not eq attributes_for(:invalid_question)[:body]
+ 
+         expect(answer.body).to eq answer.body
+ 
+       end
+ 
+       it 'rerenders edit page' do
+        expect(response).to render_template :update
+       end
+ 
+     end
+ 
+    context do
+
+      it 'does not update answer with another author' do
+
+        old_value = other_user_answer.body
+
+        patch :update, id: other_user_answer, answer: { body: 'Edited body' }, format: :js
+
+        other_user_answer.reload
+
+        expect(other_user_answer.body).to_not eq 'Edited body'
+        expect(other_user_answer.body).to eq old_value
+
+      end
+    end
+
+   end
+
 describe 'DELETE #destroy' do
 
   sign_in_user

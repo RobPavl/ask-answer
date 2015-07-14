@@ -4,11 +4,11 @@
 h3= 'Answers:'
 
 .answers
-   = render @answers
+  = render @answers
       
 - if user_signed_in?
     = form_for [@question, Answer.new], remote: true do |f|
       = f.label :body, 'Text'
-      .answer_errors
+      .new_answer_errors
       = f.text_area :body
       = f.submit 'Give an answer'
