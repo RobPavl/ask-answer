@@ -4,8 +4,45 @@ RSpec.describe AnswersController, type: :controller do
 
   let(:question) { create(:question, user: @user) }
   let(:answer) { create(:answer, question: question, user: @user) }
+  let(:current_best_answer) { create(:answer, question: question, user: @user) }
   let(:other_user) { create(:user) }
-  let(:other_user_answer) { create(:answer, question: question, user: other_user) }
+  let(:other_user_question) { create(:question, user: other_user) }
+  let(:other_user_answer) { create(:answer, question: other_user_question, user: other_user) }
+
+describe 'POST #best' do
+
+  sign_in_user
+
+  context 'Author' do
+
+    before { post :best, id: answer, format: :js }
+
+    it 'marks answer as best' do
+      answer.reload
+      expect(answer.best).to eq true
+    end
+
+    it 'assigns ex-best answer' do
+      post :best, id: current_best_answer, format: :js
+      expect(assigns(:ex_best)).to eq answer 
+    end
+
+    it 'renders update page' do
+      expect(response).to render_template :best
+    end
+
+  end
+
+  context 'Not author' do
+
+    it 'Not author of question has not such rights to mark answer as best' do
+      post :best, id: other_user_answer, format: :js
+      expect(other_user_answer.best).to_not eq true
+    end
+
+  end
+
+end
 
 describe 'POST #create' do
 

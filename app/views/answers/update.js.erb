@@ -3,7 +3,7 @@
         $("#answer-<%= @answer.id %> .answer_errors").append('<p> <%= j message %></p>')
     <% end %>
 <% else %>
-    $("#answer-<%= @answer.id %>").html('<%= j render @answer %>')
+    $("#answer-<%= @answer.id %>").replaceWith('<%= j render @answer %>')
     $('.notice').html('<%= j flash[:notice]%>')
     $('.edit-answer-link').click(function (e) {
         e.preventDefault();

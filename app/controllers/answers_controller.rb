@@ -1,7 +1,13 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
-  before_action :load_answer, only: [:update, :destroy]
+  before_action :load_answer, only: [:best, :update, :destroy]
+
+  def best
+    @ex_best = @answer.question.answers.find_by(best: true)
+    @answer.mark_as_best if @answer.user_id == current_user.id
+    @ex_best.reload if @ex_best
+  end
 
   def create
     @question = Question.find(params[:question_id])

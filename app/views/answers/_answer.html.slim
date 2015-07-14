@@ -2,6 +2,7 @@
   .answer_errors
   p= answer.body
   - if user_signed_in? && answer.user_id == current_user.id
+    p= answer.best ?  'Best' : link_to("Mark as best", best_answer_path(answer), method: :post, remote: true)
     p= link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
     = form_for answer, html: { id: "edit-answer-#{answer.id}" }, remote: true do |f|
       = f.label :body

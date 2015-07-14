@@ -1,0 +1,5 @@
+$("#answer-<%= @answer.id %>").remove();
+$('<%= j render @answer %>').prependTo( $('.answers'));
+<% if @ex_best %>
+    $("#answer-<%= @ex_best.id %>").replaceWith('<%= j render @ex_best%>')
+<% end %> 
