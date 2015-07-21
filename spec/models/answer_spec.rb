@@ -16,7 +16,7 @@ RSpec.describe Answer, type: :model do
     let(:answer) { create(:answer, question: question) }
 
     it 'should mark answer as best' do
-      answer.mark_as_best
+      answer.update(best: true) 
       expect(answer.best).to eq true
     end
 

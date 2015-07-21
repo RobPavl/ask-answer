@@ -4,7 +4,8 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:best, :update, :destroy]
 
   def best
-    @ex_best = @answer.question.answers.find_by(best: true)
+    @question = Question.where(params[:question_id]).first
+    @ex_best = @question.answer_best
     @answer.mark_as_best if @answer.user_id == current_user.id
     @ex_best.reload if @ex_best
   end
