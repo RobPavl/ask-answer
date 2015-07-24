@@ -46,6 +46,10 @@ require 'rails_helper'
 		  expect(assigns(:question)).to be_a_new(Question)
 		end
 
+	    it 'assigns new attachment to local variable' do
+	      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
+	    end
+
 		it { should render_template :new }
 	  end
 
