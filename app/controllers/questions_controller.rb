@@ -7,7 +7,9 @@ class QuestionsController < ApplicationController
 	end
 
 	def show
-		@answers = @question.answers
+		@answers = @question.answers.to_ary
+	    @answer = @question.answers.build
+	    @answer.attachments.build
 	end
 
 	def new

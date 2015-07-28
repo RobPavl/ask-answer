@@ -13,7 +13,6 @@ feature 'User deletes an answer' do
 
     sign_in user
     visit question_path(question)
-# save_and_open_page
     expect(page).to have_content answer.body
 
     within "#answer-#{answer.id}" do

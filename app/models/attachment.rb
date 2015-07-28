@@ -1,7 +1,7 @@
 class Attachment < ActiveRecord::Base
-	delegate :filename, to: :file
+	delegate :identifier, to: :file
 
-	belongs_to :question
+	belongs_to :attachable, polymorphic: true
 
 	validates :file, presence: true
 	

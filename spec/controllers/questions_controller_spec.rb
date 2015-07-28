@@ -28,6 +28,14 @@ require 'rails_helper'
 	      expect(assigns(:question)).to eq question
 	    end
 
+	    it 'assigns answer to @answer' do
+	      expect(assigns(:answer)).to be_a_new(Answer)
+	    end
+
+	    it 'assigns attachment to @answer' do
+	      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
+	    end
+
 		it 'assigns all the answers for specified question to @answers variable' do
 		  expect(assigns(:answers)).to match_array(question.answers)
 		end
