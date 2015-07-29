@@ -28,14 +28,6 @@ require 'rails_helper'
 	      expect(assigns(:question)).to eq question
 	    end
 
-	    it 'assigns answer to @answer' do
-	      expect(assigns(:answer)).to be_a_new(Answer)
-	    end
-
-	    it 'assigns attachment to @answer' do
-	      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
-	    end
-
 		it 'assigns all the answers for specified question to @answers variable' do
 		  expect(assigns(:answers)).to match_array(question.answers)
 		end
@@ -53,10 +45,6 @@ require 'rails_helper'
 		it 'get a new question object' do
 		  expect(assigns(:question)).to be_a_new(Question)
 		end
-
-	    it 'assigns new attachment to local variable' do
-	      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
-	    end
 
 		it { should render_template :new }
 	  end

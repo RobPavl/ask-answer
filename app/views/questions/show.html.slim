@@ -7,11 +7,11 @@ h3= 'Answers:'
   = render @answers
       
 - if user_signed_in?
-    = form_for [@question, @answer], remote: true do |f|
+    = form_for [@question, Answer.new], remote: true do |f|
       = f.label :body, 'Text'
       .new_answer_errors
       = f.text_area :body
-      = f.fields_for :attachments do |a|
-        p= a.label :file
-        = a.file_field :file
+      = f.fields_for :attachments do |attachment|
+      .links
+        = link_to_add_association 'Add file', f, :attachments
       = f.submit 'Give an answer'
