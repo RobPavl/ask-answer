@@ -1,2 +1,5 @@
-p= f.label :file
-= f.file_field :file
+.nested-fields
+  .file
+    = f.label :file
+    = f.file_field :file
+  = link_to_remove_association "Remove file", f
