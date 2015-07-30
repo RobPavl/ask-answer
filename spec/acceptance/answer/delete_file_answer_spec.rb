@@ -2,12 +2,12 @@ require_relative '../acceptance_helper'
 
 feature 'User deletes a file from created answer' do
 
-  describe 'Authenticated user' do
-
     given(:user) { create(:user) }
     given(:question) { create(:question, user: user) }
     given(:answer) { create(:answer, user: user, question: question) }
     given!(:attachment) { create(:attachment, attachable: answer) }
+
+  describe 'Authenticated user' do
 
     background do
       sign_in user
@@ -26,6 +26,17 @@ feature 'User deletes a file from created answer' do
 
       end
 
+    end
+
+  end
+  
+  scenario 'Not author does not has such rights to delete file', js: true do
+
+    visit question_path(question)
+
+    within '.answers' do
+      expect(page).to_not have_link 'Remove file'
+      expect(page).to have_content attachment.file.file.filename
     end
 
   end
