@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def show
-		@answers = @question.answers.to_ary
+		@answers = @question.answers
 	end
 
 	def new
