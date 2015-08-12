@@ -41,9 +41,13 @@ feature 'User marks an answer as best' do
           click_on 'Mark as best'
         end
 
+        sleep(1)
+
         within "#answer-#{answers[2].id}" do
           click_on 'Mark as best'
         end
+
+        sleep(1)
 
         expect(page).to have_content('Best', count: 1)
         expect(page).to have_link('Mark as best', count: 2)
@@ -52,7 +56,7 @@ feature 'User marks an answer as best' do
           expect(page).to have_content 'Best'
           expect(page).to_not have_link 'Mark as best'
         end
-        save_page
+        
         within "#answer-#{answers[1].id}" do
           expect(page).to_not have_content 'Best'
           expect(page).to have_link 'Mark as best'

@@ -6,6 +6,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :votes do
+    post 'like', on: :collection
+    post 'dislike', on: :collection
+    delete 'cancel', on: :member
+  end
+
   resources :attachments, only: :destroy
 
   root to: "questions#index" 

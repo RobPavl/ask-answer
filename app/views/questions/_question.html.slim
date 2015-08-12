@@ -1,5 +1,8 @@
 h1= @question.title
 h2= @question.body
+= link_to 'Like', like_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'set-vote'
+|  /
+= link_to 'Dislike', dislike_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'set-vote'
 p= 'Attachments:'
 ul
   - @question.attachments.find_each do |a|
