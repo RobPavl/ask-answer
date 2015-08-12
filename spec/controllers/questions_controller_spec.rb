@@ -5,6 +5,7 @@ require 'rails_helper'
       let(:question) { create(:question, user: @user) }
       let(:other_user) { create(:user) }
       let(:other_user_question) { create(:question, user: other_user) }
+      let(:vote) { create(:vote, votable: other_user_question, user: @user)}
 
 	  describe "GET #index" do
 	   	sign_in_user

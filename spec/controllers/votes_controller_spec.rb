@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe VotesController, type: :controller do
 
   let(:author) { create(:user) }
+  let(:somebody) { create(:user) }
   let(:question) { create(:question, user: author) }
   let(:user_question) { create(:question, user: @user) }
-  let(:vote) { create(:vote, votable: question, user: author) }
+  let(:vote) { create(:vote, votable: question, user: @user) }
+  let!(:somebody_vote) { create(:vote, votable: question, user: somebody) }
 
 
   describe 'POST #like' do
@@ -90,6 +92,36 @@ RSpec.describe VotesController, type: :controller do
         post :dislike, question: question.id, format: :json
         expect{ post :dislike, question: question.id, format: :json }.to_not change(Vote, :count)
         expect(response.status).to eq 403
+
+      end
+
+    end
+
+  end
+
+  describe 'DELETE #cancel' do
+
+    context 'Authenticated user' do
+
+      sign_in_user
+
+      it 'assigns specified vote to @vote' do
+
+        delete :cancel, id: vote, format: :json
+        expect(assigns(:vote)).to eq vote
+
+      end
+
+      it 'assigns specified votable to @votable' do
+
+        delete :cancel, id: vote, format: :json
+        expect(assigns(:votable)).to eq question
+
+      end
+
+      it 'Only owner of vote has such rights to delete his vote' do
+
+        expect{ delete :cancel, id: vote, format: :json }.to_not change(Vote, :count)
 
       end
 

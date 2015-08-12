@@ -1,8 +1,8 @@
 class VotesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :load_question
-  before_action :load_vote
+  before_action :load_votable, only: [:like,:dislike]
+  before_action :assign_vote, only: [:like,:dislike]
   respond_to :json
 
   def like
@@ -13,33 +13,51 @@ class VotesController < ApplicationController
     save_vote(-1)
   end
 
+  def cancel
+    @vote = Vote.find(params[:id])
+
+    return respond_with(@vote, status: 403) if  @vote.user_id != current_user.id
+
+    @votable = @vote.votable
+
+    respond_to do |format|
+
+      if @vote.destroy
+       format.json { render json: @votable, status: 200 }
+      else
+       format.json { render json: @votable, status: :unprocessable_entity }
+      end
+
+    end
+  end
+
   private
 
   def save_vote(value)
 
-    return respond_with(@vote, status: 403) if @question.user_id == current_user.id or @vote.persisted?
+    return respond_with(@vote, status: 403) if @vote.persisted?
 
-    @vote.user = current_user
     @vote.save_score(value)
 
     respond_to do |format|
 
       if @vote.save
-        format.json { render json: @vote }
+        format.json { render json: @vote, status: 200  }
       else
-        format.json { render json: @vote.errors.full_messages, status: :unprocessable_entity }
+        format.json { render json: @vote, status: :unprocessable_entity }
       end
 
     end
 
   end
 
-  def load_question
+  def load_votable
     @question = Question.find(params[:question])
+    respond_with(Vote.new, status: 403) if @question.user_id == current_user.id
   end
 
-  def load_vote
-    @vote = @question.votes.new unless @vote = @question.votes.find_by(user:current_user.id)
+  def assign_vote
+    @vote = Vote.find_or_initialize_by(votable:@question, user: current_user)
   end
 
 end

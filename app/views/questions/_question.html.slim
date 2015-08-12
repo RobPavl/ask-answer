@@ -1,8 +1,13 @@
 h1= @question.title
 h2= @question.body
-= link_to 'Like', like_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'set-vote'
-|  /
-= link_to 'Dislike', dislike_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'set-vote'
+.question-vote
+  - if user_signed_in?
+    - if @question.votes.find_by(user: current_user)
+      = link_to 'Cancel vote', cancel_vote_path(@question.votes.find_by(user: current_user)), method: :delete, remote: true, data: { type: :json }, class: 'vote-cancel'
+    - else
+      = link_to 'Like', like_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'vote-set'
+      br
+      = link_to 'Dislike', dislike_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'vote-set'
 p= 'Attachments:'
 ul
   - @question.attachments.find_each do |a|
