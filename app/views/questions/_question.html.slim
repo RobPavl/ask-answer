@@ -1,6 +1,7 @@
 h1= @question.title
 h2= @question.body
 .question-vote
+  p= "Votes:#{@question.rate}"
   - if user_signed_in?
     - if @question.votes.find_by(user: current_user)
       = link_to 'Cancel vote', cancel_vote_path(@question.votes.find_by(user: current_user)), method: :delete, remote: true, data: { type: :json }, class: 'vote-cancel'

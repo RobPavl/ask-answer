@@ -18,20 +18,29 @@ feature 'User gives a score to a question' do
 
       click_on 'Like'
 
+      sleep(1)
+
       expect(page).to_not have_link 'Like'
       expect(page).to have_link 'Cancel vote'
+      expect(page).to have_content 'Votes:1'
 
       click_on 'Cancel vote'
+
+      sleep(1)
 
       expect(page).to have_link 'Like'
       expect(page).to have_link 'Dislike'
       expect(page).to_not have_link 'Cancel vote'
+      expect(page).to have_content 'Votes:0'
 
       click_on 'Dislike'
+
+      sleep(1)
 
       expect(page).to_not have_link 'Like'
       expect(page).to_not have_link 'Dislike'
       expect(page).to have_link 'Cancel vote'
+      expect(page).to have_content 'Votes:-1'
 
     end
 

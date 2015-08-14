@@ -57,6 +57,7 @@ group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
+  gem 'test_after_commit'
   gem 'capybara', '~> 2.4.4'
   gem 'launchy'
 end

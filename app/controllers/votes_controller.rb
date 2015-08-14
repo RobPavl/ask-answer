@@ -23,9 +23,9 @@ class VotesController < ApplicationController
     respond_to do |format|
 
       if @vote.destroy
-       format.json { render json: @votable, status: 200 }
+       format.json { render json: { votable: @votable.reload }, status: 200 }
       else
-       format.json { render json: @votable, status: :unprocessable_entity }
+       format.json { render json: { votable: @votable.reload }, status: :unprocessable_entity }
       end
 
     end
@@ -42,9 +42,9 @@ class VotesController < ApplicationController
     respond_to do |format|
 
       if @vote.save
-        format.json { render json: @vote, status: 200  }
+        format.json { render json: { vote: @vote, votable: @vote.votable.reload }, status: 200  }
       else
-        format.json { render json: @vote, status: :unprocessable_entity }
+        format.json { render json: { vote: @vote, votable: @vote.votable.reload }, status: :unprocessable_entity }
       end
 
     end

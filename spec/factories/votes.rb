@@ -1,9 +1,13 @@
 FactoryGirl.define do
-  factory :vote do
-    user_id 1
-score "MyString"
-votable_id 1
-votable_type "MyString"
+   factory :vote do
+     user
+     score :like
+   end
+   
+  factory :dislike_vote, class: Vote do
+    user
+    score :dislike
   end
 
 end
+ 
