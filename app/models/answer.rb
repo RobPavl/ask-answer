@@ -4,6 +4,7 @@ class Answer < ActiveRecord::Base
   belongs_to :question
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :votes, as: :votable, dependent: :destroy
 
   validates :body, :question_id, :user_id, presence: true
   validates :body, length: 5..1500

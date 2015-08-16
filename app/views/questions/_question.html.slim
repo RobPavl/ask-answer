@@ -2,13 +2,13 @@ h1= @question.title
 h2= @question.body
 .question-vote
   p= "Votes:#{@question.rate}"
-  - if user_signed_in?
+  - if user_signed_in? && @question.user_id != current_user.id
     - if @question.votes.find_by(user: current_user)
       = link_to 'Cancel vote', cancel_vote_path(@question.votes.find_by(user: current_user)), method: :delete, remote: true, data: { type: :json }, class: 'vote-cancel'
     - else
-      = link_to 'Like', like_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'vote-set'
+      = link_to 'Like', like_votes_path(votable: @question.id, votable_type: @question.model_name), method: :post, remote: true, data: { type: :json }, class: 'vote-set'
       br
-      = link_to 'Dislike', dislike_votes_path(question: @question.id), method: :post, remote: true, data: { type: :json }, class: 'vote-set'
+      = link_to 'Dislike', dislike_votes_path(votable: @question.id, votable_type: @question.model_name), method: :post, remote: true, data: { type: :json }, class: 'vote-set'
 p= 'Attachments:'
 ul
   - @question.attachments.find_each do |a|

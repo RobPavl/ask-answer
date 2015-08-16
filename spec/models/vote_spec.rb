@@ -18,7 +18,7 @@ RSpec.describe Vote, type: :model do
   it { should validate_presence_of :votable_id }
   it { should validate_uniqueness_of(:votable_id).scoped_to([:votable_type,:user_id]) }
   it { should validate_presence_of :votable_type }
-  it { should validate_inclusion_of(:votable_type).in_array([:Question]) }
+  it { should validate_inclusion_of(:votable_type).in_array([:Question, :Answer]) }
 
   it "save to score 'like'/'dislike' value according to call params " do
 

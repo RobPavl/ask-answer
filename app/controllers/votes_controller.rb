@@ -52,12 +52,12 @@ class VotesController < ApplicationController
   end
 
   def load_votable
-    @question = Question.find(params[:question])
-    respond_with(Vote.new, status: 403) if @question.user_id == current_user.id
+    @votable = params[:votable_type].classify.constantize.find(params[:votable])
+    respond_with(Vote.new, status: 403) if @votable.user_id == current_user.id
   end
 
   def assign_vote
-    @vote = Vote.find_or_initialize_by(votable:@question, user: current_user)
+    @vote = Vote.find_or_initialize_by(votable:@votable, user: current_user)
   end
 
 end
