@@ -99,7 +99,7 @@ RSpec.describe VotesController, type: :controller do
 
   end
 
-  describe 'DELETE #cancel' do
+  describe 'DELETE #destroy' do
 
     context 'Authenticated user' do
 
@@ -107,21 +107,28 @@ RSpec.describe VotesController, type: :controller do
 
       it 'assigns specified vote to @vote' do
 
-        delete :cancel, id: vote, format: :json
+        delete :destroy, id: vote, format: :json
         expect(assigns(:vote)).to eq vote
 
       end
 
       it 'assigns specified votable to @votable' do
 
-        delete :cancel, id: vote, format: :json
+        delete :destroy, id: vote, format: :json
         expect(assigns(:votable)).to eq question
+
+      end
+
+      it 'assigns specified votable_type to @votable_type' do
+
+        delete :destroy, id: vote, format: :json
+        expect(assigns(:votable_type)).to eq 'Question'
 
       end
 
       it 'Only owner of vote has such rights to delete his vote' do
 
-        expect{ delete :cancel, id: vote, format: :json }.to_not change(Vote, :count)
+        expect{ delete :destroy, id: vote, format: :json }.to_not change(Vote, :count)
 
       end
 

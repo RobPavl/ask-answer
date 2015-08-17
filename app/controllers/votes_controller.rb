@@ -13,17 +13,18 @@ class VotesController < ApplicationController
     save_vote(-1)
   end
 
-  def cancel
+  def destroy
     @vote = Vote.find(params[:id])
 
     return respond_with(@vote, status: 403) if  @vote.user_id != current_user.id
 
     @votable = @vote.votable
+    @votable_type = @vote.votable_type
 
     respond_to do |format|
 
       if @vote.destroy
-       format.json { render json: { votable: @votable.reload }, status: 200 }
+       format.json { render json: { votable: @votable.reload, votable_type: @votable_type }, status: 200 }
       else
        format.json { render json: { votable: @votable.reload }, status: :unprocessable_entity }
       end

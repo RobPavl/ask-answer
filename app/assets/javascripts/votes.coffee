@@ -1,14 +1,14 @@
 ready = ->
   $(".vote-set").bind 'ajax:success', (e, data, status, xhr) ->
-    controller_data = $.parseJSON(xhr.responseText)
-    $(".question-vote").html '<p>Votes:' + controller_data.votable.rate + '</p>'
-    $(".question-vote").append '<a data-type="json" class="vote-cancel" data-remote="true" rel="nofollow" data-method="delete" href="/votes/' + controller_data.vote.id + '/cancel">Cancel vote</a>'
+    arch = $.parseJSON(xhr.responseText)
+    $("#" + arch.vote.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.vote.votable_type.toLowerCase() + '-vote').html '<p>Votes:' + arch.votable.rate + '</p>'
+    $("#" + arch.vote.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.vote.votable_type.toLowerCase() + '-vote').append '<a data-type="json" class="vote-cancel" data-remote="true" rel="nofollow" data-method="delete" href="/votes/' + arch.vote.id + '">Cancel vote</a>'
 
   $(".vote-cancel").bind 'ajax:success', (e, data, status, xhr) ->
-    controller_data = $.parseJSON(xhr.responseText)
-    $(".question-vote").html '<p>Votes:' + controller_data.votable.rate + '</p>'
-    $(".question-vote").append '<a data-type="json" class="vote-set" data-remote="true" rel="nofollow" data-method="post" href="/votes/like?votable=' + controller_data.votable.id + '&votable_type=Question">Like</a>'
-    $(".question-vote").append '<br>'
-    $(".question-vote").append '<a data-type="json" class="vote-set" data-remote="true" rel="nofollow" data-method="post" href="/votes/dislike?votable=' + controller_data.votable.id + '&votable_type=Question">Dislike</a>'
+    arch = $.parseJSON(xhr.responseText)
+    $("#" + arch.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.votable_type.toLowerCase() + '-vote').html '<p>Votes:' + arch.votable.rate + '</p>'
+    $("#" + arch.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.votable_type.toLowerCase() + '-vote').append '<a data-type="json" class="vote-set" data-remote="true" rel="nofollow" data-method="post" href="/votes/like?votable=' + arch.votable.id + '&votable_type=' + arch.votable_type + '">Like</a>'
+    $("#" + arch.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.votable_type.toLowerCase() + '-vote').append '<br>'
+    $("#" + arch.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.votable_type.toLowerCase() + '-vote').append '<a data-type="json" class="vote-set" data-remote="true" rel="nofollow" data-method="post" href="/votes/dislike?votable=' + arch.votable.id + '&votable_type=' + arch.votable_type + '">Dislike</a>'
 
 $(document).on('page:update', ready)

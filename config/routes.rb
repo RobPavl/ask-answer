@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   resources :votes do
     post 'like', on: :collection
     post 'dislike', on: :collection
-    delete 'cancel', on: :member
   end
 
   resources :attachments, only: :destroy

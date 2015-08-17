@@ -1,11 +1,11 @@
 .answer id = "answer-#{answer.id}"
   .answer_errors
   p= answer.body
-  .answer-vote
+  .answer-vote id = "answer-#{answer.id}-vote"
     p= "Votes:#{answer.rate}"
     - if user_signed_in? && answer.user_id != current_user.id
       - if answer.votes.find_by(user: current_user)
-        = link_to 'Cancel vote', cancel_vote_path(answer.votes.find_by(user: current_user)), method: :delete, remote: true, data: {type: :json}, class: 'vote-cancel'
+        = link_to 'Cancel vote', vote_path(answer.votes.find_by(user: current_user)), method: :delete, remote: true, data: {type: :json}, class: 'vote-cancel'
       - else
         = link_to 'Like', like_votes_path(votable: answer.id, votable_type: answer.model_name), method: :post, remote: true, data: {type: :json}, class: 'vote-set'
         br
