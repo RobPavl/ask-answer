@@ -15,6 +15,10 @@ RSpec.describe Vote, type: :model do
   it { should validate_presence_of :user_id }
 
   it { should belong_to :votable }
+
+  it { should validate_presence_of :score }
+  it { should validate_inclusion_of(:score).in_array([-1, 1]) }
+
   it { should validate_presence_of :votable_id }
   it { should validate_uniqueness_of(:votable_id).scoped_to([:votable_type,:user_id]) }
   it { should validate_presence_of :votable_type }
@@ -24,19 +28,11 @@ RSpec.describe Vote, type: :model do
 
     vote.save_score(1)
 
-    expect(vote.score).to eq 'like'
+    expect(vote.score).to eq 1
 
     vote.save_score(-1)
 
-    expect(vote.score).to eq 'dislike'
-
-  end
-
-  it 'do not save to score attribute value when call params was not in specified range' do
-
-    vote.save_score(0)
-
-    expect(vote.score).to eq 'dislike'
+    expect(vote.score).to eq -1
 
   end
 

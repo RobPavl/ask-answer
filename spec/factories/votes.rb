@@ -1,12 +1,12 @@
 FactoryGirl.define do
    factory :vote do
      user
-     score :like
+     score 1
    end
    
   factory :dislike_vote, class: Vote do
     user
-    score :dislike
+    score -1
   end
 
 end

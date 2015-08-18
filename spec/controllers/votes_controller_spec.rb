@@ -26,7 +26,7 @@ RSpec.describe VotesController, type: :controller do
       it "assign 'like' value to score attribute" do
 
         post :like, votable: question.id, votable_type: 'Question', format: :json
-        expect(assigns(:vote).score).to eq 'like'
+        expect(assigns(:vote).score).to eq 1
 
       end
 
@@ -71,7 +71,7 @@ RSpec.describe VotesController, type: :controller do
       it "assign 'dislike' value to score attribute" do
 
         post :dislike, votable: question.id, votable_type: 'Question', format: :json
-        expect(assigns(:vote).score).to eq 'dislike'
+        expect(assigns(:vote).score).to eq -1
 
       end
 
@@ -116,13 +116,6 @@ RSpec.describe VotesController, type: :controller do
 
         delete :destroy, id: vote, format: :json
         expect(assigns(:votable)).to eq question
-
-      end
-
-      it 'assigns specified votable_type to @votable_type' do
-
-        delete :destroy, id: vote, format: :json
-        expect(assigns(:votable_type)).to eq 'Question'
 
       end
 
