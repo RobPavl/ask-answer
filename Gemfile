@@ -32,6 +32,8 @@ gem 'twitter-bootstrap-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem "cocoon"
+gem 'private_pub'
+gem 'thin'
 gem 'carrierwave'
 gem 'remotipart'
 

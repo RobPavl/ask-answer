@@ -3,7 +3,7 @@
 
 h3= 'Answers:'
 
-.answers
+.answers data = { question_id: "#{@question.id}" }
   = render @answers
       
 - if user_signed_in?
@@ -15,3 +15,5 @@ h3= 'Answers:'
       .links
         = link_to_add_association 'Add file', f, :attachments
       = f.submit 'Give an answer'
+
+= subscribe_to "/questions/#{@question.id}/answers"

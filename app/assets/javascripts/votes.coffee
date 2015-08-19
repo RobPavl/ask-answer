@@ -11,4 +11,6 @@ ready = ->
     $("#" + arch.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.votable_type.toLowerCase() + '-vote').append '<br>'
     $("#" + arch.votable_type.toLowerCase() + "-" + arch.votable.id + '-vote.' + arch.votable_type.toLowerCase() + '-vote').append '<a data-type="json" class="vote-set" data-remote="true" rel="nofollow" data-method="post" href="/votes/dislike?votable=' + arch.votable.id + '&votable_type=' + arch.votable_type + '">Dislike</a>'
 
+$(document).ready(ready)
 $(document).on('page:update', ready)
+$(document).on('page:load',ready)

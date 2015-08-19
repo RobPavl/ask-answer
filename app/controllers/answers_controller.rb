@@ -15,6 +15,13 @@ class AnswersController < ApplicationController
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
     flash[:notice] = "Answer successfully added!"  if @answer.save
+
+    respond_to do |format|
+      format.js do
+        render nothing: true
+        PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json
+      end
+    end
   end
 
   def update
