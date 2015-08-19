@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
 	before_action :authenticate_user!, except: [:show, :index]
 	before_action :load_question, only: [:show, :update, :destroy]
+	before_action :save_current_user, only: [:show]
 
 	def index
 		@questions = Question.all
@@ -42,4 +43,12 @@ class QuestionsController < ApplicationController
 	def question_params
 		params.require(:question).permit(:title, :body, attachments_attributes:[:file])
 	end
+
+    def save_current_user
+	    if user_signed_in?
+	      gon.current_user = current_user.id if user_signed_in?
+	      gon.question_author = @question.user_id
+	    end
+    end
+
 end

@@ -1,0 +1,35 @@
+.answer id = "answer-{{id}}"
+   .answer_errors
+   p{} {{body}}
+   .answer-vote id = "answer-{{id}}-vote"
+     p{} "Votes:{{rate}}"
+     |{{#if isSigned}}
+     |{{#unless isAnswerAuthor}}
+     a data-type="json" class="vote-set" data-remote="true" rel="nofollow" data-method="post" href="/votes/like?votable={{id}}&votable_type=Answer" Like
+     br
+     a data-type="json" class="vote-set" data-remote="true" rel="nofollow" data-method="post" href="/votes/dislike?votable={{id}}&votable_type=Answer" Dislike
+     |{{/unless}}
+     |{{/if}}
+   p{} Attachments:
+   ul
+     |{{#each attachments}}
+     .attachment id = "attachment-{{this.id}}"
+         li
+             a href="{{this.file.url}}" {{this.name}}
+             br
+             |{{#if ../isAnswerAuthor}}
+             a data-remote="true" rel="nofollow" data-method="delete" href="/attachments/{{this.id}}" Remove file
+             |{{/if}}
+     |{{/each}}
+   |{{#if isSigned}}
+ 
+   |{{#if isQuestionAuthor }}
+   a data-remote="true" rel="nofollow" data-method="post" href="/answers/{{id}}/best" Mark as best
+   |{{/if}}
+ 
+   |{{#if isAnswerAuthor }}
+   a class="edit-answer-link" data-answer-id="{{id}}" href="" Edit
+   a data-remote="true" rel="nofollow" data-method="delete" href="/answers/{{id}}" Delete
+   |{{/if}}
+ 
+   |{{/if}}

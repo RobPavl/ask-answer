@@ -19,7 +19,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.js do
         render nothing: true
-        PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json
+        PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json, attachments: @answer.attachments
       end
     end
   end
