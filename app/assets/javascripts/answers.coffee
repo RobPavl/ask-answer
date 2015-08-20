@@ -5,23 +5,36 @@ ready = ->
     answer_id = $(this).data('answerId');
     $('form#edit-answer-'+ answer_id).show();
 
-
-  questionId = $('.answers').data('questionId');
-  channel = '/questions/' + questionId + '/answers';
-  PrivatePub.subscribe channel, (data, channel) ->
-    answer = $.parseJSON(data['answer']);
+  add_answer = (answer) ->
 
     if gon.current_user
       answer.isSigned = gon.current_user;
       answer.isAnswerAuthor = gon.current_user == answer.user_id;
       answer.isQuestionAuthor = gon.question_author == gon.current_user;
 
-    answer.attachments = data.attachments;
 
     for attach in answer.attachments
       attach.name = attach.file.url.split('/').slice(-1)[0];
 
     $('.answers').append -> HandlebarsTemplates['answers/answer'](answer);
+
+    $editForm = $('#new_answer').clone();
+    $editForm.removeClass('new_answer').addClass('edit_answer')
+    .removeClass('new_answer_errors')
+    .attr('action',"/answers/#{answer.id}")
+    .attr('id',"edit-answer-#{answer.id}")
+    .attr('value', 'Save')
+    $editForm.find('.answer_body textarea').val("#{answer.body}")
+
+    $("#answer-#{answer.id}").append($editForm)
+
+  questionId = $('.answers').data('questionId');
+
+  PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
+
+    answer = $.parseJSON(data['answer']);
+    answer.attachments = data.attachments;
+    add_answer(answer)
 
 $(document).ready(ready)
 $(document).on('page:load',ready)

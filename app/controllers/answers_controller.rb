@@ -14,12 +14,14 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user
-    flash[:notice] = "Answer successfully added!"  if @answer.save
 
-    respond_to do |format|
-      format.js do
-        render nothing: true
-        PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json, attachments: @answer.attachments
+    if @answer.save
+      respond_to do |format|
+        flash[:notice] = "Answer successfully added!"
+        format.js do
+          render nothing: true
+          PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json, attachments: @answer.attachments
+        end
       end
     end
   end

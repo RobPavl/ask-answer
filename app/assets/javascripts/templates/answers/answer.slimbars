@@ -1,6 +1,6 @@
 .answer id = "answer-{{id}}"
    .answer_errors
-   p{} {{body}}
+   h4{} {{body}}
    .answer-vote id = "answer-{{id}}-vote"
      p{} "Votes:{{rate}}"
      |{{#if isSigned}}
@@ -26,9 +26,10 @@
    |{{#if isQuestionAuthor }}
    a data-remote="true" rel="nofollow" data-method="post" href="/answers/{{id}}/best" Mark as best
    |{{/if}}
- 
+   br
    |{{#if isAnswerAuthor }}
    a class="edit-answer-link" data-answer-id="{{id}}" href="" Edit
+   br
    a data-remote="true" rel="nofollow" data-method="delete" href="/answers/{{id}}" Delete
    |{{/if}}
  

@@ -1,6 +1,6 @@
 .answer id = "answer-#{answer.id}"
   .answer_errors
-  p= answer.body
+  h4= answer.body
   .answer-vote id = "answer-#{answer.id}-vote"
     p= "Votes:#{answer.rate}"
     - if user_signed_in? && answer.user_id != current_user.id
@@ -16,11 +16,15 @@
       .attachment id = "attachment-#{a.id}"
         li= link_to a.file.file.identifier, a.file.url
         = link_to 'Remove file', attachment_path(a), method: :delete, remote: true  if user_signed_in? && current_user.id == answer.user_id
-  - if user_signed_in? && answer.user_id == current_user.id
-    p= answer.best ?  'Best' : link_to("Mark as best", best_answer_path(answer), method: :post, remote: true)
-    p= link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-    = form_for answer, html: { id: "edit-answer-#{answer.id}" }, remote: true do |f|
-      = f.label :body
-      = f.text_area :body
-      = f.submit 'Save'
-    p= link_to 'Delete', answer_path(answer), method: :delete, remote: true if user_signed_in? && answer.user_id == current_user.id 
+  - if user_signed_in? 
+      - if answer.question.user_id == current_user.id
+        = answer.best ?  'Best' : link_to("Mark as best", best_answer_path(answer), method: :post, remote: true)
+        br
+      - if answer.user_id == current_user.id
+        = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+        br
+        = form_for answer, html: { id: "edit-answer-#{answer.id}" }, remote: true do |f|
+          = f.label :body
+          = f.text_area :body
+          = f.submit 'Save'
+        = link_to 'Delete', answer_path(answer), method: :delete, remote: true if user_signed_in? && answer.user_id == current_user.id 

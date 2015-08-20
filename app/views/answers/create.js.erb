@@ -1,9 +1,6 @@
 <% if @answer.errors.present? %>
+    $('.new_answer_errors').html('')
     <%@answer.errors.full_messages.each do |message|%>
         $('.new_answer_errors').append('<p> <%= j message %></p>')
     <% end %>
-<% else %>
-    $('.answers').append('<%= j render @answer %>')
-    $('.notice').html('<%= j flash[:notice]%>')
-    $('textarea#answer_body').val('')
 <% end %>
