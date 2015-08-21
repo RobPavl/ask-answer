@@ -3,6 +3,7 @@ class Question < ActiveRecord::Base
   belongs_to :user
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :votes, as: :votable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :title, :body, :user_id, presence: true
   validates :title, length: 5..140

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :attachments, only: :destroy
+  resources :comments, only: :create
 
   root to: "questions#index" 
   # The priority is based upon order of creation: first created -> highest priority.

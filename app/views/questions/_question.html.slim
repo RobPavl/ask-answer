@@ -22,3 +22,15 @@ ul
     .question_errors
     = f_q.text_area :body
     = f_q.submit 'Save'
+p= 'Comments:'
+ul
+  - @question.comments.find_each do |c|
+    .comment id = "comment-#{c.id}"
+      li= c.body
+
+- if user_signed_in?
+  = form_for Comment.new, remote: true do |f_c|
+    = f_c.label :body, 'Text'
+    p= f_c.text_area :body
+    .new_comment_errors
+    = f_c.submit 'Add a comment'
