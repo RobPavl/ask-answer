@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 	before_action :authenticate_user!, except: [:show, :index]
 	before_action :load_question, only: [:show, :update, :destroy]
-	before_action :save_current_user, only: [:show]
+	before_action :save_current_user, only: [:show, :index]
 
 	def index
 		@questions = Question.all
@@ -23,6 +23,7 @@ class QuestionsController < ApplicationController
 		@question = Question.create(question_params)
 		@question.user = current_user
 		  if @question.save
+		  	PrivatePub.publish_to '/questions/index', question: @question.to_json
 	        redirect_to question_path(@question), flash: { notice: "Question successfully created!"}
 	      else
 		    render :new
@@ -47,7 +48,7 @@ class QuestionsController < ApplicationController
     def save_current_user
 	    if user_signed_in?
 	      gon.current_user = current_user.id if user_signed_in?
-	      gon.question_author = @question.user_id
+	      gon.question_author = @question.user_id if @question
 	    end
     end
 

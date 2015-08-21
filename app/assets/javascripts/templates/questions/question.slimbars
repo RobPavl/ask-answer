@@ -1,0 +1,4 @@
+a href="/questions/{{id}}" {{title}}
+br
+ a rel="nofollow" data-method="delete" href="/questions/{{id}}" Delete
+p 
