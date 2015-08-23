@@ -1,9 +1,8 @@
-.question
- = render @question
+= render @question
 
 h3= 'Answers:'
 
-.answers data = { question_id: "#{@question.id}" }
+.answers 
   = render @answers
       
 - if user_signed_in?

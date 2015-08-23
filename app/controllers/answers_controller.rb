@@ -16,13 +16,11 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
-      respond_to do |format|
-        flash[:notice] = "Answer successfully added!"
-        format.js do
-          render nothing: true
-          PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json, attachments: @answer.attachments
-        end
-      end
+      flash[:notice] = "Answer successfully added!"
+      PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json, attachments: @answer.attachments
+      render json: @answer.to_json #respond_with(@answer.to_json, location: question_path(@question) )
+    else
+      render json: @answer.errors.to_json#respond_with(@answer.errors.to_json)
     end
   end
 

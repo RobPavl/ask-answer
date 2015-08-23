@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :questions do
-    resources :answers, shallow: true do
+  concern :commentable do
+    resources :comments, only: :create
+  end
+
+  resources :questions, concerns: :commentable, defaults: { commentable: 'question' } do
+    resources :answers, concerns: :commentable, defaults: { commentable: 'answer' }, shallow: true do
       post 'best', on: :member
     end
   end
@@ -12,7 +16,6 @@ Rails.application.routes.draw do
   end
 
   resources :attachments, only: :destroy
-  resources :comments, only: :create
 
   root to: "questions#index" 
   # The priority is based upon order of creation: first created -> highest priority.

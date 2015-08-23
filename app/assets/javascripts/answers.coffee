@@ -18,6 +18,10 @@ ready = ->
 
     $('.answers').append -> HandlebarsTemplates['answers/answer'](answer);
 
+    $newComment = $('#new_comment').clone()
+    .attr('action',"/answers/#{answer.id}/comments")
+    $("#answer-#{answer.id}").append($newComment)
+
     $editForm = $('#new_answer').clone();
     $editForm.removeClass('new_answer').addClass('edit_answer')
     .removeClass('new_answer_errors')
@@ -28,7 +32,13 @@ ready = ->
 
     $("#answer-#{answer.id}").append($editForm)
 
-  questionId = $('.answers').data('questionId');
+  $("form.new_answer").bind 'ajax:success', (e, data, status, xhr) ->
+    answer = $.parseJSON(xhr.responseText)
+    answer.attachments = data.attachments;
+    add_answer(answer) if !$('.answer-'+ answer.id).get
+    $('textarea#answer_body').val('')
+
+  questionId = $('.question').data('questionId');
 
   PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
 

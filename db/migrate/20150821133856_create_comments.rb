@@ -7,6 +7,6 @@ class CreateComments < ActiveRecord::Migration
       t.integer :commentable_id
       t.timestamps null: false
     end
-    add_index :comments, [:commentable_id, :commentable_type, :user_id], unique: true, name: :user_polymorphic_comment
+    add_index :comments, [:commentable_id, :commentable_type, :user_id], name: :user_polymorphic_comment
   end
 end

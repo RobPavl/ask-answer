@@ -28,3 +28,6 @@
           = f.text_area :body
           = f.submit 'Save'
         = link_to 'Delete', answer_path(answer), method: :delete, remote: true if user_signed_in? && answer.user_id == current_user.id 
+
+  = render 'comments/comments', commentable: answer
+  = subscribe_to "/question/#{answer.question_id}/comments"

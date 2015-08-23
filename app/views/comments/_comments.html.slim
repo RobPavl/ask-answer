@@ -1,0 +1,13 @@
+p= 'Comments:'
+.comments
+  ul
+    - commentable.comments.find_each do |c|
+      .comment id = "comment-#{c.id}"
+        li= c.body
+
+- if user_signed_in?
+  = form_for [commentable, Comment.new], data: { type: :json }, remote: true do |f_c|
+    = f_c.label :body, 'Text'
+    p= f_c.text_area :body
+    .new_comment_errors
+    = f_c.submit 'Add a comment' 

@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20150821133856) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "comments", ["commentable_id", "commentable_type", "user_id"], name: "user_polymorphic_comment", unique: true, using: :btree
+  add_index "comments", ["commentable_id", "commentable_type", "user_id"], name: "user_polymorphic_comment", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
