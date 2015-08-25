@@ -24,7 +24,7 @@ feature 'User edit a question' do
           fill_in 'Body', with: 'It is a new body for testing'
           click_on 'Save'
           expect(page).to have_content 'It is a new body for testing'
-          expect(page).to_not have_selector 'textarea'
+          expect(page).to_not have_selector 'textarea#question_body'
           expect(page).to_not have_content question.body
           expect(current_path).to eq question_path(question)
 

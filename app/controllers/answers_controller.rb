@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
   before_action :load_answer, only: [:best, :update, :destroy]
+  respond_to :json, :js
 
   def best
     @question = Question.where(params[:question_id]).first
@@ -18,9 +19,9 @@ class AnswersController < ApplicationController
     if @answer.save
       flash[:notice] = "Answer successfully added!"
       PrivatePub.publish_to "/questions/#{@answer.question_id}/answers", answer: @answer.to_json, attachments: @answer.attachments
-      render json: @answer.to_json #respond_with(@answer.to_json, location: question_path(@question) )
+      respond_with(@answer.to_json, location: question_path(@question) )
     else
-      render json: @answer.errors.to_json#respond_with(@answer.errors.to_json)
+      respond_with(@answer, status: :unprocessable_entity)
     end
   end
 

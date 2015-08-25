@@ -6,10 +6,12 @@ h3= 'Answers:'
   = render @answers
       
 - if user_signed_in?
+    br
+    .new_answer_errors
+      br
     = form_for [@question, Answer.new], remote: true do |f|
       = f.label :body, 'Text'
-      .new_answer_errors
-      = f.text_area :body
+      p= f.text_area :body
       = f.fields_for :attachments do |attachment|
       .links
         = link_to_add_association 'Add file', f, :attachments

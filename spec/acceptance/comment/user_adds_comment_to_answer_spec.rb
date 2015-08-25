@@ -5,6 +5,7 @@ feature 'User adds a comment to the question' do
   given(:user) { create(:user) }
   given(:author) { create(:user) }
   given(:question) { create(:question, user: user) }
+  given!(:answer) { create(:answer, user: user, question: question) }
 
   describe 'Authenticated user' do
 
@@ -13,23 +14,23 @@ feature 'User adds a comment to the question' do
       visit question_path(question)
     end
 
-    scenario 'adds a comment to the question', js: true do
+    scenario 'adds a comment to the answer', js: true do
 
-      within '.question' do
+      within ".answers" do
 
         fill_in 'Comment', with: attributes_for(:comment)[:body]
         click_on 'Add a comment'
 
-         expect(page).to have_content attributes_for(:comment)[:body]
-         expect(current_path).to eq question_path(question)
+        expect(page).to have_content attributes_for(:comment)[:body]
+        expect(current_path).to eq question_path(question)
 
       end
 
     end
 
-    scenario 'does not add a comment to the question with invalid attributes', js: true do
+    scenario 'does not add a comment to the answer with invalid attributes', js: true do
 
-      within '.question' do
+      within ".answers" do
 
         fill_in 'Comment', with: attributes_for(:invalid_comment)[:body]
         click_on 'Add a comment'
@@ -49,7 +50,7 @@ feature 'User adds a comment to the question' do
 
     scenario 'has not such rights to add a comment', js: true do
 
-      within '.question' do
+      within ".answers" do
 
         expect(page).to_not have_button 'Add a comment'
         expect(page).to_not have_selector 'textarea'
@@ -60,4 +61,4 @@ feature 'User adds a comment to the question' do
 
   end
 
-end 
+end

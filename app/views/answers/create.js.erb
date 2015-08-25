@@ -1,6 +1,8 @@
 <% if @answer.errors.present? %>
-    $('.new_answer_errors').html('')
+    $('.new_answer_errors').html('');
     <%@answer.errors.full_messages.each do |message|%>
-        $('.new_answer_errors').append('<p> <%= j message %></p>')
+        $('.new_answer_errors').append('<p> <%= j message %></p>');
     <% end %>
 <% end %>
+
+$('textarea#answer_body').val('');

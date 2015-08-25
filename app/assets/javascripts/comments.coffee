@@ -4,10 +4,15 @@ ready = ->
     $('div#' + comment.commentable_type.toLowerCase() + '-' + comment.commentable_id).find('.comments ul').append ->
       HandlebarsTemplates['comments/comment'](comment) if !$('div#comment-'+comment.id).length
 
-  $("form.new_comment").bind 'ajax:success', (e, data, status, xhr) ->
+  $("form.new_comment").on 'ajax:success', (e, data, status, xhr) ->
     comment = $.parseJSON(xhr.responseText)
     add_comment(comment)
     $('textarea#comment_body').val('')
+  .on 'ajax:error', (e, xhr, status, error) ->
+    response = $.parseJSON(xhr.responseText)
+    comment = response.comment
+    errors = response.errors
+    $('div#' + comment.commentable_type.toLowerCase() + '-' + comment.commentable_id).find('div.new_comment_errors').html('<p>' + errors + '</p>')
 
   questionId = $('.question').data('questionId');
 

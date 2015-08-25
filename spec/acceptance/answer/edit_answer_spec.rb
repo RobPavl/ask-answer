@@ -27,7 +27,7 @@ feature 'User edits answer' do
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'Edited answer'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea#answer_body'
 
       end
 

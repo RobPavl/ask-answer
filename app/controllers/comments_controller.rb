@@ -9,9 +9,9 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     if @comment.save
       PrivatePub.publish_to "/question/#{question_id}/comments", comment: @comment.to_json
-      respond_with(@comment.to_json, location: question_path(@commentable))
+      respond_with(@comment.to_json, location: question_path(question_id))
     else
-      render nothing: true
+      respond_with({ comment: @comment, errors: @comment.errors.full_messages }, location: question_path(question_id), status: :unprocessable_entity)
     end
 
   end
